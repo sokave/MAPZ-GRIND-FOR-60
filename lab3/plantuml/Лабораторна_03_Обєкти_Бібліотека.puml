@@ -1,0 +1,48 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 16
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 180
+skinparam classAttributeIconSize 0
+left to right direction
+title Бібліотека — знімок 2026-10-23 10:05 UTC
+object "<u>artur : Читач</u>" as artur {
+  fullName = "Некрасов Артур Дмитрович"
+  blocked = false
+  reservationLimit = 3
+  loanLimit = 5
+}
+object "<u>квиток : ЧитацькийКвиток</u>" as card2023 {
+  number = "LIB-2023-0042"
+  validUntil = 2027-08-31
+  status = ACTIVE
+}
+object "<u>hold1 : Бронювання</u>" as hold1 {
+  createdAt = 2026-10-23T10:00Z
+  expiresAt = 2026-10-25T10:00Z
+  state = ACTIVE
+}
+object "<u>copy42 : Примірник</u>" as copy42 {
+  inventoryNo = "BK-0042"
+  state = RESERVED
+  location = "Абонемент 1"
+  circulating = true
+}
+object "<u>notice1 : Сповіщення</u>" as notice1 {
+  recipient = "artur@example.org"
+  state = RETRY
+  attempts = 1
+  retryAt = 2026-10-23T10:10Z
+}
+artur *-- card2023
+artur -- hold1
+hold1 -- copy42
+hold1 -- notice1
+note bottom of hold1
+  Частковий знімок п’яти класів ЛР2.
+  expiresAt = createdAt + 48 годин.
+  Інші сутності й слоти приховано.
+end note
+@enduml

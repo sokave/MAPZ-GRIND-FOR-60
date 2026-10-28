@@ -1,0 +1,48 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 16
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 180
+left to right direction
+title Проєкт розгортання бібліотеки
+node "Пристрій користувача" as Client <<device>> {
+ node "Браузер" <<executionEnvironment>> {
+  artifact "library-ui.js\n(завантажена копія)" as UIClient
+ }
+}
+node "Вебсервер" as WebNode <<VM>> {
+ node "Nginx" <<executionEnvironment>> {
+  artifact "index.html" as HTML
+  artifact "library-ui.js" as UI
+  artifact "nginx.conf" as NginxConfig
+ }
+}
+node "Сервер застосунків" as AppNode <<VM>> {
+ node "JVM" <<executionEnvironment>> {
+  artifact "library-api.jar" as API
+  artifact "library.yml" as Config
+  artifact "protected-files/guide.pdf" as BookFile
+ }
+}
+node "Сервер бази даних" as DBNode <<VM>> {
+ node "PostgreSQL" <<executionEnvironment>> {
+  artifact "library-db\n(база даних)" as DB
+  artifact "schema.sql" as Schema
+ }
+}
+node "Зовнішній сервер повідомлень" as MessageNode <<external>> {
+ node "JVM шлюзу" <<executionEnvironment>> {
+  artifact "message-gateway.jar" as MessageAPI
+ }
+}
+Client -- WebNode : HTTPS / TCP 443
+WebNode -- AppNode : HTTPS / TCP 8443\nREST / JSON
+AppNode -- DBNode : PostgreSQL / TCP 5432 / TLS
+AppNode -- MessageNode : HTTPS / TCP 443\nREST / JSON
+note bottom of API
+  Маніфестує Каталог, Облікові записи,
+  Книговидачу, Сповіщення й Доступ до даних.
+end note
+@enduml

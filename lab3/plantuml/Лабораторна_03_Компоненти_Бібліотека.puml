@@ -1,0 +1,46 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 16
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 180
+left to right direction
+skinparam componentStyle uml2
+title Компоненти університетської бібліотеки
+package "Система бібліотеки" {
+component "Вебпортал" as Web
+component "Каталог" as Catalogue
+component "Облікові записи" as Readers
+component "Книговидача" as Loans
+component "Сповіщення" as Notify
+component "Доступ до даних" as Data
+interface "ICatalogue" as ICatalogue
+interface "IReaders" as IReaders
+interface "ILoans" as ILoans
+interface "INotify" as INotify
+interface "IData" as IData
+}
+component "Зовнішній шлюз" as Gateway <<external>>
+interface "IMessageGateway" as IMessageGateway
+Catalogue -- ICatalogue
+Readers -- IReaders
+Loans -- ILoans
+Notify -- INotify
+Gateway -- IMessageGateway
+Data -- IData
+ICatalogue )-- Web
+IReaders )-- Web
+ILoans )-- Web
+IReaders )-- Loans
+INotify )-- Loans
+IMessageGateway )-- Notify
+IData )-- Catalogue
+IData )-- Readers
+IData )-- Loans
+IData )-- Notify
+legend bottom
+  Каталог, Облікові записи, Книговидача, Сповіщення й Доступ до даних
+  постачаються разом у library-api.jar (модульний моноліт).
+endlegend
+@enduml
