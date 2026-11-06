@@ -1,0 +1,27 @@
+VDMJ version = 4.7.0-P build 260414
+Model: Lab7_VDM.vdmsl
+Parsed 1 module in 0.692 secs. No syntax errors
+Type checked 1 module in 1.28 secs. No type errors
+Completed 1 module in 0.815 secs. No completion errors
+Bye
+
+VDM-SL interpreter checks (pre / post / inv enabled)
+PASS C01  Unknown notice in the initial state
+PASS C02  Two new notices are queued with count 0
+PASS C03  Queued notice cannot start sending
+PASS C04  Pause / resume restores Queued
+PASS C05  Pause / resume restores Ready
+PASS C06  First send enters WaitingResult (attempt 1)
+PASS C07  Duplicate send while waiting is rejected
+PASS C08  Failure at 100 sets retryAt to 105
+PASS C09  Send at 104 returns TooEarly; state unchanged
+PASS C10  Send at 105 starts attempt 2
+PASS C11  Late reply for attempt 1 changes nothing
+PASS C12  Reply for attempt 2 reaches terminal Sent
+PASS C13  Reschedule to 116; other notice unchanged
+PASS C14  Duplicate reservation is rejected
+PASS C15  Reuse of a notice ID is rejected
+PASS C16  Invalid payload cannot be prepared
+PASS C17  Callback after Sent is rejected
+
+17/17 checks passed.

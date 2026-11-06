@@ -1,0 +1,92 @@
+VDMJ version = 4.7.0-P build 260414
+
+[Type check]
+Parsed 1 module in 0.692 secs. No syntax errors
+Type checked 1 module in 1.28 secs. No type errors
+Completed 1 module in 0.815 secs. No completion errors
+Bye
+
+[RunChecks; exit 0]
+Parsed 2 modules in 0.221 secs. No syntax errors
+Type checked 2 modules in 4.741 secs. No type errors
+Initialized 2 modules in 5.174 secs. No init errors
+[true, true, true, true, true, true, true, true, true, true, true, true, true]
+Bye
+
+[DuplicateReservation; exit 1]
+Parsed 2 modules in 1.995 secs. No syntax errors
+Type checked 2 modules in 4.367 secs. No type errors
+Initialized 2 modules in 6.365 secs. No init errors
+Execution: Error 4071: Precondition failure: pre_Register in 'LibraryNotice' (output/Lab7_VDM.vdmsl) at line 74:33
+	retryAt = {|->}
+	noticeOf = {mk_ReservationId(mk_token("R1")) |-> mk_NoticeId(mk_token("N1"))}
+	r = mk_ReservationId(mk_token("R1"))
+	attempts = {mk_NoticeId(mk_token("N1")) |-> 0}
+	n = mk_NoticeId(mk_token("N2"))
+	resumeTo = {|->}
+	DeliveryState~ = mk_DeliveryState({mk_ReservationId(mk_token("R1"))...{mk_NoticeId(mk_token("N1")) |-> 0}, {|->}, {|->})
+	phase = {mk_NoticeId(mk_token("N1")) |-> <Queued>}
+In root context of pre_Register(r, n, DeliveryState~) in 'Lab7Checks' (/workspace/scratch/112150f22a35/work/lab7/Lab7Checks.vdmsl) at line 105:38
+In context of block statement in 'Lab7Checks' (/workspace/scratch/112150f22a35/work/lab7/Lab7Checks.vdmsl) at line 105:5
+In root context of DuplicateReservation() in 'Lab7Checks' (console) at line 1:1
+In root context of module scope
+Bye
+
+[DuplicateNotice; exit 1]
+Parsed 2 modules in 1.242 secs. No syntax errors
+Type checked 2 modules in 2.468 secs. No type errors
+Initialized 2 modules in 9.153 secs. No init errors
+Execution: Error 4071: Precondition failure: pre_Register in 'LibraryNotice' (output/Lab7_VDM.vdmsl) at line 74:33
+	retryAt = {|->}
+	noticeOf = {mk_ReservationId(mk_token("R1")) |-> mk_NoticeId(mk_token("N1"))}
+	r = mk_ReservationId(mk_token("R2"))
+	attempts = {mk_NoticeId(mk_token("N1")) |-> 0}
+	n = mk_NoticeId(mk_token("N1"))
+	resumeTo = {|->}
+	DeliveryState~ = mk_DeliveryState({mk_ReservationId(mk_token("R1"))...{mk_NoticeId(mk_token("N1")) |-> 0}, {|->}, {|->})
+	phase = {mk_NoticeId(mk_token("N1")) |-> <Queued>}
+In root context of pre_Register(r, n, DeliveryState~) in 'Lab7Checks' (/workspace/scratch/112150f22a35/work/lab7/Lab7Checks.vdmsl) at line 109:38
+In context of block statement in 'Lab7Checks' (/workspace/scratch/112150f22a35/work/lab7/Lab7Checks.vdmsl) at line 109:5
+In root context of DuplicateNotice() in 'Lab7Checks' (console) at line 1:1
+In root context of module scope
+Bye
+
+[InvalidPayload; exit 1]
+Parsed 2 modules in 0.944 secs. No syntax errors
+Type checked 2 modules in 1.544 secs. No type errors
+Initialized 2 modules in 3.575 secs. No init errors
+Execution: Error 4071: Precondition failure: pre_Prepare in 'LibraryNotice' (output/Lab7_VDM.vdmsl) at line 84:5
+	retryAt = {|->}
+	noticeOf = {mk_ReservationId(mk_token("R1")) |-> mk_NoticeId(mk_token("N1"))}
+	validPayload = false
+	attempts = {mk_NoticeId(mk_token("N1")) |-> 0}
+	n = mk_NoticeId(mk_token("N1"))
+	resumeTo = {|->}
+	DeliveryState~ = mk_DeliveryState({mk_ReservationId(mk_token("R1"))...{mk_NoticeId(mk_token("N1")) |-> 0}, {|->}, {|->})
+	phase = {mk_NoticeId(mk_token("N1")) |-> <Queued>}
+In root context of pre_Prepare(n, validPayload, DeliveryState~) in 'Lab7Checks' (/workspace/scratch/112150f22a35/work/lab7/Lab7Checks.vdmsl) at line 113:38
+In context of block statement in 'Lab7Checks' (/workspace/scratch/112150f22a35/work/lab7/Lab7Checks.vdmsl) at line 113:5
+In root context of InvalidPayload() in 'Lab7Checks' (console) at line 1:1
+In root context of module scope
+Bye
+
+[LateCallback; exit 1]
+Parsed 2 modules in 0.432 secs. No syntax errors
+Type checked 2 modules in 1.818 secs. No type errors
+Initialized 2 modules in 3.331 secs. No init errors
+Execution: Error 4071: Precondition failure: pre_RecordResult in 'LibraryNotice' (output/Lab7_VDM.vdmsl) at line 155:9
+	retryAt = {|->}
+	noticeOf = {mk_ReservationId(mk_token("R1")) |-> mk_NoticeId(mk_token("N1"))}
+	a = 1
+	attempts = {mk_NoticeId(mk_token("N1")) |-> 1}
+	n = mk_NoticeId(mk_token("N1"))
+	ok = false
+	resumeTo = {|->}
+	now = 101
+	DeliveryState~ = mk_DeliveryState({mk_ReservationId(mk_token("R1"))...{mk_NoticeId(mk_token("N1")) |-> 1}, {|->}, {|->})
+	phase = {mk_NoticeId(mk_token("N1")) |-> <Sent>}
+In root context of pre_RecordResult(n, a, ok, now, DeliveryState~) in 'Lab7Checks' (/workspace/scratch/112150f22a35/work/lab7/Lab7Checks.vdmsl) at line 118:52
+In context of block statement in 'Lab7Checks' (/workspace/scratch/112150f22a35/work/lab7/Lab7Checks.vdmsl) at line 117:5
+In root context of LateCallback() in 'Lab7Checks' (console) at line 1:1
+In root context of module scope
+Bye

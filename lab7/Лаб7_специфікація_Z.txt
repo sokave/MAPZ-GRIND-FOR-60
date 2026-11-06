@@ -1,0 +1,208 @@
+ЛАБОРАТОРНА РОБОТА №7 · Z-СПЕЦИФІКАЦІЯ
+Сповіщення про бронювання в університетській бібліотеці
+Некрасов Артур Дмитрович · ІПЗ-23-3
+
+Запис схем у текстовій Z-нотації (UTF-8). Рядки предикатів з'єднані ∧.
+TIME — цілі хвилини від початку відліку годинника сервісу; now? надає сервіс.
+⤔ — часткова ін'єкція, ⇸ — часткова функція, ⊕ — перевизначення,
+⩤ — вилучення аргументів, ◁ — обмеження області, ℱ — скінченні підмножини.
+Порядок предикатів DeliveryState відповідає І1–І7 звіту.
+Черга та фази моделюють лише сповіщення про успішно збережені бронювання.
+Стан Sent включає завершення T12; вхідні події після нього не застосовні.
+Запуску спроби відповідає перехід у WaitingResult; зовнішній шлюз за межею.
+
+[RESERVATION, NOTICE]
+
+PHASE ::= Queued | Ready | Paused | WaitingResult | RetryWait | Sent
+MESSAGE ::= PENDING | RETRY | SENT
+BOOL ::= no | yes
+SENDREPORT ::= Started | UnknownNotice | NotReady | TooEarly
+
+PREP == {Queued, Ready}
+TIME == ℕ
+ATTEMPT == ℕ₁
+
+┌─ Аксіоматичне визначення ────────────────────────────────────────────────────┐
+│ RETRY_DELAY : TIME                                                           │
+│ statusOf : PHASE → MESSAGE                                                   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ RETRY_DELAY = 5                                                              │
+│ statusOf = {Queued ↦ PENDING, Ready ↦ PENDING, Paused ↦ PENDING,             │
+│             WaitingResult ↦ PENDING, RetryWait ↦ RETRY, Sent ↦ SENT}         │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ DeliveryState ──────────────────────────────────────────────────────────────┐
+│ noticeOf : RESERVATION ⤔ NOTICE                                              │
+│ phase    : NOTICE ⇸ PHASE                                                    │
+│ attempts : NOTICE ⇸ ℕ                                                        │
+│ retryAt  : NOTICE ⇸ TIME                                                     │
+│ resumeTo : NOTICE ⇸ PREP                                                     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ dom noticeOf ∈ ℱ RESERVATION                                                 │
+│ dom phase = ran noticeOf                                                     │
+│ dom attempts = dom phase                                                     │
+│ dom retryAt = {n : dom phase | phase n = RetryWait}                          │
+│ dom resumeTo = {n : dom phase | phase n = Paused}                            │
+│ ∀ n : dom phase | phase n ∈ {WaitingResult, RetryWait, Sent} •               │
+│     attempts n > 0                                                           │
+│ ∀ n : dom phase | phase n ∈ {Queued, Ready, Paused} • attempts n = 0         │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ Init ───────────────────────────────────────────────────────────────────────┐
+│ DeliveryState'                                                               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ noticeOf' = ∅ ∧ phase' = ∅ ∧ attempts' = ∅                                   │
+│ retryAt' = ∅ ∧ resumeTo' = ∅                                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ Register ───────────────────────────────────────────────────────────────────┐
+│ ΔDeliveryState                                                               │
+│ r? : RESERVATION; n? : NOTICE                                                │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ r? ∉ dom noticeOf ∧ n? ∉ ran noticeOf                                        │
+│ noticeOf' = noticeOf ∪ {r? ↦ n?}                                             │
+│ phase' = phase ∪ {n? ↦ Queued}                                               │
+│ attempts' = attempts ∪ {n? ↦ 0}                                              │
+│ retryAt' = retryAt ∧ resumeTo' = resumeTo                                    │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ Prepare ────────────────────────────────────────────────────────────────────┐
+│ ΔDeliveryState                                                               │
+│ n? : NOTICE; valid? : BOOL                                                   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ n? ∈ {n : dom phase | phase n = Queued} ∧ valid? = yes                       │
+│ phase' = phase ⊕ {n? ↦ Ready}                                                │
+│ noticeOf' = noticeOf ∧ attempts' = attempts                                  │
+│ retryAt' = retryAt ∧ resumeTo' = resumeTo                                    │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ Pause ──────────────────────────────────────────────────────────────────────┐
+│ ΔDeliveryState                                                               │
+│ n? : NOTICE                                                                  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ n? ∈ {n : dom phase | phase n ∈ PREP}                                        │
+│ phase' = phase ⊕ {n? ↦ Paused}                                               │
+│ resumeTo' = resumeTo ∪ {n? ↦ phase n?}                                       │
+│ noticeOf' = noticeOf ∧ attempts' = attempts ∧ retryAt' = retryAt             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ Resume ─────────────────────────────────────────────────────────────────────┐
+│ ΔDeliveryState                                                               │
+│ n? : NOTICE                                                                  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ n? ∈ dom resumeTo                                                            │
+│ phase' = phase ⊕ {n? ↦ resumeTo n?}                                          │
+│ resumeTo' = {n?} ⩤ resumeTo                                                  │
+│ noticeOf' = noticeOf ∧ attempts' = attempts ∧ retryAt' = retryAt             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ SendEnabled ────────────────────────────────────────────────────────────────┐
+│ DeliveryState                                                                │
+│ n? : NOTICE; now? : TIME                                                     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ n? ∈ {n : dom phase | phase n = Ready}                                       │
+│   ∨ n? ∈ {n : dom retryAt | retryAt n ≤ now?}                                │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ Send ───────────────────────────────────────────────────────────────────────┐
+│ ΔDeliveryState                                                               │
+│ SendEnabled                                                                  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ phase' = phase ⊕ {n? ↦ WaitingResult}                                        │
+│ attempts' = attempts ⊕ {n? ↦ (attempts n? + 1)}                              │
+│ retryAt' = {n?} ⩤ retryAt                                                    │
+│ noticeOf' = noticeOf ∧ resumeTo' = resumeTo                                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ ResultInput ────────────────────────────────────────────────────────────────┐
+│ DeliveryState                                                                │
+│ n? : NOTICE; a? : ATTEMPT; ok? : BOOL; now? : TIME                           │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ n? ∈ {n : dom phase | phase n = WaitingResult}                               │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ RecordOk ───────────────────────────────────────────────────────────────────┐
+│ ΔDeliveryState                                                               │
+│ ResultInput                                                                  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ a? = attempts n? ∧ ok? = yes                                                 │
+│ phase' = phase ⊕ {n? ↦ Sent}                                                 │
+│ noticeOf' = noticeOf ∧ attempts' = attempts                                  │
+│ retryAt' = retryAt ∧ resumeTo' = resumeTo                                    │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ RecordFail ─────────────────────────────────────────────────────────────────┐
+│ ΔDeliveryState                                                               │
+│ ResultInput                                                                  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ a? = attempts n? ∧ ok? = no                                                  │
+│ phase' = phase ⊕ {n? ↦ RetryWait}                                            │
+│ retryAt' = retryAt ∪ {n? ↦ (now? + RETRY_DELAY)}                             │
+│ noticeOf' = noticeOf ∧ attempts' = attempts ∧ resumeTo' = resumeTo           │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ StaleResult ────────────────────────────────────────────────────────────────┐
+│ ΞDeliveryState                                                               │
+│ ResultInput                                                                  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ a? ≠ attempts n?                                                             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+RecordResult ≙ RecordOk ∨ RecordFail ∨ StaleResult
+
+┌─ Reschedule ─────────────────────────────────────────────────────────────────┐
+│ ΔDeliveryState                                                               │
+│ n? : NOTICE; at? : TIME; now? : TIME                                         │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ n? ∈ dom retryAt ∧ now? < at?                                                │
+│ retryAt' = retryAt ⊕ {n? ↦ at?}                                              │
+│ noticeOf' = noticeOf ∧ phase' = phase                                        │
+│ attempts' = attempts ∧ resumeTo' = resumeTo                                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ Snapshot ───────────────────────────────────────────────────────────────────┐
+│ ΞDeliveryState                                                               │
+│ n? : NOTICE                                                                  │
+│ p! : PHASE; status! : MESSAGE; count! : ℕ; due! : ℱ TIME                     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ n? ∈ dom phase                                                               │
+│ p! = phase n? ∧ status! = statusOf p! ∧ count! = attempts n?                 │
+│ due! = ran ({n?} ◁ retryAt)                                                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ UnknownError ───────────────────────────────────────────────────────────────┐
+│ ΞDeliveryState                                                               │
+│ n? : NOTICE; now? : TIME; report! : SENDREPORT                               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ n? ∉ dom phase ∧ report! = UnknownNotice                                     │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ NotReadyError ──────────────────────────────────────────────────────────────┐
+│ ΞDeliveryState                                                               │
+│ n? : NOTICE; now? : TIME; report! : SENDREPORT                               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ n? ∈ {n : dom phase | phase n ∉ {Ready, RetryWait}}                          │
+│ report! = NotReady                                                           │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ TooEarlyError ──────────────────────────────────────────────────────────────┐
+│ ΞDeliveryState                                                               │
+│ n? : NOTICE; now? : TIME; report! : SENDREPORT                               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ n? ∈ {n : dom retryAt | now? < retryAt n}                                    │
+│ report! = TooEarly                                                           │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Success ≙ [ report! : SENDREPORT | report! = Started ]
+
+SendTotal ≙ (Send ∧ Success) ∨ UnknownError ∨ NotReadyError ∨ TooEarlyError
+
+КОНТРАКТИ
+Register — проєкція атомарного збереження бронювання та сповіщення (UC03).
+Prepare, Pause, Resume — підготовка та мілка історія з Лаб. №5.
+Send — початок нової спроби; pre Send ≙ SendEnabled (доведено у звіті).
+RecordResult — T07 / T08 / T09. Тайм-аут подає поточний номер і ok? = no.
+Reschedule — T10; дата має бути пізнішою за now?, запис ще в RetryWait.
+Snapshot — запит; порожнє due! означає відсутність часу повтору.
+SendTotal повна для всіх допустимих станів та типізованих входів.
+Три помилкові гілки мають однакові сигнатури й зберігають стан через Ξ.

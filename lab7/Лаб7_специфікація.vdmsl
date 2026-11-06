@@ -1,0 +1,179 @@
+-- Lab 7: university library reservation notifications
+-- Time is measured in minutes on the trusted monotonic service clock.
+module LibraryNotice
+exports all
+definitions
+
+types
+  ReservationId :: value : token;
+  NoticeId :: value : token;
+  Minute = nat;
+  AttemptNo = nat
+  inv a == a > 0;
+
+  PrepPhase = <Queued> | <Ready>;
+  Phase = PrepPhase | <Paused> | <WaitingResult> | <RetryWait> | <Sent>;
+  MessageState = <PENDING> | <RETRY> | <SENT>;
+  SendReport = <Started> | <UnknownNotice> | <NotReady> | <TooEarly>;
+  SnapshotView ::
+    step   : Phase
+    status : MessageState
+    count  : nat
+    due    : set of Minute;
+
+values
+  RETRY_DELAY : Minute = 5;
+
+state DeliveryState of
+  noticeOf : inmap ReservationId to NoticeId
+  phase    : map NoticeId to Phase
+  attempts : map NoticeId to nat
+  retryAt  : map NoticeId to Minute
+  resumeTo : map NoticeId to PrepPhase
+inv mk_DeliveryState(link, p, a, d, h) ==
+  -- I1: VDM maps are finite. I2-I7 are the following predicates.
+  dom p = rng link
+  and dom a = dom p
+  and dom d = {n | n in set dom p & p(n) = <RetryWait>}
+  and dom h = {n | n in set dom p & p(n) = <Paused>}
+  and (forall n in set dom p &
+    p(n) in set {<WaitingResult>, <RetryWait>, <Sent>} => a(n) > 0)
+  and (forall n in set dom p &
+    p(n) in set {<Queued>, <Ready>, <Paused>} => a(n) = 0)
+init s == s = mk_DeliveryState({|->}, {|->}, {|->}, {|->}, {|->})
+end
+
+functions
+  StatusOf : Phase -> MessageState
+  StatusOf(p) ==
+    if p = <Sent> then <SENT>
+    elseif p = <RetryWait> then <RETRY>
+    else <PENDING>;
+
+  SendEnabled : map NoticeId to Phase * map NoticeId to Minute *
+                NoticeId * Minute -> bool
+  SendEnabled(p, d, n, now) ==
+    if n not in set dom p then false
+    elseif p(n) = <Ready> then true
+    elseif p(n) = <RetryWait> and n in set dom d then d(n) <= now
+    else false;
+
+  -- Implicit function: its postcondition specifies the unique result.
+  RetryDeadline(now : Minute) due : Minute
+  post due = now + RETRY_DELAY;
+
+operations
+  -- Projection of the atomic save of Reservation and Notification in UC03.
+  Register : ReservationId * NoticeId ==> ()
+  Register(r, n) ==
+    atomic (
+      noticeOf := noticeOf munion {r |-> n};
+      phase := phase munion {n |-> <Queued>};
+      attempts := attempts munion {n |-> 0}
+    )
+  pre r not in set dom noticeOf and n not in set rng noticeOf
+  post noticeOf = noticeOf~ munion {r |-> n}
+    and phase = phase~ munion {n |-> <Queued>}
+    and attempts = attempts~ munion {n |-> 0}
+    and retryAt = retryAt~ and resumeTo = resumeTo~;
+
+  Prepare : NoticeId * bool ==> ()
+  Prepare(n, validPayload) ==
+    phase := phase ++ {n |-> <Ready>}
+  pre validPayload
+    and n in set {m | m in set dom phase & phase(m) = <Queued>}
+  post phase = phase~ ++ {n |-> <Ready>}
+    and noticeOf = noticeOf~ and attempts = attempts~
+    and retryAt = retryAt~ and resumeTo = resumeTo~;
+
+  Pause : NoticeId ==> ()
+  Pause(n) ==
+    atomic (
+      resumeTo := resumeTo munion
+        {n |-> if phase(n) = <Ready> then <Ready> else <Queued>};
+      phase := phase ++ {n |-> <Paused>}
+    )
+  pre n in set {m | m in set dom phase & phase(m) in set {<Queued>, <Ready>}}
+  post phase = phase~ ++ {n |-> <Paused>}
+    and resumeTo = resumeTo~ munion
+      {n |-> if phase~(n) = <Ready> then <Ready> else <Queued>}
+    and noticeOf = noticeOf~ and attempts = attempts~ and retryAt = retryAt~;
+
+  Resume : NoticeId ==> ()
+  Resume(n) ==
+    atomic (
+      phase := phase ++ {n |-> resumeTo(n)};
+      resumeTo := {n} <-: resumeTo
+    )
+  pre n in set dom resumeTo
+  post phase = phase~ ++ {n |-> resumeTo~(n)}
+    and resumeTo = {n} <-: resumeTo~
+    and noticeOf = noticeOf~ and attempts = attempts~ and retryAt = retryAt~;
+
+  Send : NoticeId * Minute ==> ()
+  Send(n, now) ==
+    atomic (
+      phase := phase ++ {n |-> <WaitingResult>};
+      attempts := attempts ++ {n |-> attempts(n) + 1};
+      retryAt := {n} <-: retryAt
+    )
+  pre SendEnabled(phase, retryAt, n, now)
+  post phase = phase~ ++ {n |-> <WaitingResult>}
+    and attempts = attempts~ ++ {n |-> attempts~(n) + 1}
+    and retryAt = {n} <-: retryAt~
+    and noticeOf = noticeOf~ and resumeTo = resumeTo~;
+
+  SendTotal : NoticeId * Minute ==> SendReport
+  SendTotal(n, now) ==
+    if n not in set dom phase then return <UnknownNotice>
+    elseif SendEnabled(phase, retryAt, n, now) then
+      (Send(n, now); return <Started>)
+    elseif phase(n) = <RetryWait> then return <TooEarly>
+    else return <NotReady>
+  post noticeOf = noticeOf~ and resumeTo = resumeTo~
+    and (if SendEnabled(phase~, retryAt~, n, now) then
+      RESULT = <Started>
+      and phase = phase~ ++ {n |-> <WaitingResult>}
+      and attempts = attempts~ ++ {n |-> attempts~(n) + 1}
+      and retryAt = {n} <-: retryAt~
+    else
+      phase = phase~ and attempts = attempts~ and retryAt = retryAt~
+      and RESULT =
+        (if n not in set dom phase~ then <UnknownNotice>
+         elseif phase~(n) = <RetryWait> then <TooEarly>
+         else <NotReady>));
+
+  RecordResult : NoticeId * AttemptNo * bool * Minute ==> ()
+  RecordResult(n, a, ok, now) ==
+    if a <> attempts(n) then skip
+    elseif ok then phase := phase ++ {n |-> <Sent>}
+    else
+      atomic (
+        phase := phase ++ {n |-> <RetryWait>};
+        retryAt := retryAt munion {n |-> now + RETRY_DELAY}
+      )
+  pre n in set {m | m in set dom phase & phase(m) = <WaitingResult>}
+  post noticeOf = noticeOf~ and attempts = attempts~ and resumeTo = resumeTo~
+    and (if a <> attempts~(n) then phase = phase~ and retryAt = retryAt~
+    elseif ok then phase = phase~ ++ {n |-> <Sent>} and retryAt = retryAt~
+    else phase = phase~ ++ {n |-> <RetryWait>}
+      and retryAt = retryAt~ munion {n |-> now + RETRY_DELAY}
+      and post_RetryDeadline(now, retryAt(n)));
+
+  Reschedule : NoticeId * Minute * Minute ==> ()
+  Reschedule(n, at, now) ==
+    retryAt := retryAt ++ {n |-> at}
+  pre n in set dom retryAt and at > now
+  post retryAt = retryAt~ ++ {n |-> at}
+    and noticeOf = noticeOf~ and phase = phase~ and attempts = attempts~
+    and resumeTo = resumeTo~;
+
+  pure Snapshot : NoticeId ==> SnapshotView
+  Snapshot(n) ==
+    return mk_SnapshotView(phase(n), StatusOf(phase(n)), attempts(n),
+                           rng ({n} <: retryAt))
+  pre n in set dom phase
+  post RESULT = mk_SnapshotView(phase(n), StatusOf(phase(n)), attempts(n),
+                                rng ({n} <: retryAt))
+
+end LibraryNotice

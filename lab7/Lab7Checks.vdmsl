@@ -1,0 +1,120 @@
+-- Executable checks for the delivered LibraryNotice module.
+module Lab7Checks
+imports from LibraryNotice all
+exports all
+definitions
+
+values
+  r1 : LibraryNotice`ReservationId = mk_LibraryNotice`ReservationId(mk_token("R1"));
+  r2 : LibraryNotice`ReservationId = mk_LibraryNotice`ReservationId(mk_token("R2"));
+  n1 : LibraryNotice`NoticeId = mk_LibraryNotice`NoticeId(mk_token("N1"));
+  n2 : LibraryNotice`NoticeId = mk_LibraryNotice`NoticeId(mk_token("N2"));
+  ghost : LibraryNotice`NoticeId = mk_LibraryNotice`NoticeId(mk_token("unknown"));
+
+operations
+  RunChecks : () ==> seq of bool
+  RunChecks() ==
+  (
+    dcl code : LibraryNotice`SendReport,
+        o1 : LibraryNotice`SnapshotView, o2 : LibraryNotice`SnapshotView,
+        c01 : bool := false, c02 : bool := false, c03 : bool := false,
+        c04 : bool := false, c05 : bool := false, c06 : bool := false,
+        c07 : bool := false, c08 : bool := false, c09 : bool := false,
+        c10 : bool := false, c11 : bool := false, c12 : bool := false,
+        c13 : bool := false;
+
+    code := LibraryNotice`SendTotal(ghost, 100);
+    c01 := code = <UnknownNotice>;
+    LibraryNotice`Register(r1, n1);
+    LibraryNotice`Register(r2, n2);
+    o1 := LibraryNotice`Snapshot(n1);
+    o2 := LibraryNotice`Snapshot(n2);
+    c02 := o1 = mk_LibraryNotice`SnapshotView(<Queued>, <PENDING>, 0, {})
+      and o2 = mk_LibraryNotice`SnapshotView(<Queued>, <PENDING>, 0, {});
+    code := LibraryNotice`SendTotal(n1, 100);
+    o1 := LibraryNotice`Snapshot(n1);
+    c03 := code = <NotReady>
+      and o1 = mk_LibraryNotice`SnapshotView(<Queued>, <PENDING>, 0, {});
+
+    LibraryNotice`Pause(n1);
+    o1 := LibraryNotice`Snapshot(n1);
+    c04 := o1 = mk_LibraryNotice`SnapshotView(<Paused>, <PENDING>, 0, {});
+    LibraryNotice`Resume(n1);
+    o1 := LibraryNotice`Snapshot(n1);
+    c04 := c04 and o1 = mk_LibraryNotice`SnapshotView(<Queued>, <PENDING>, 0, {});
+    LibraryNotice`Prepare(n1, true);
+    LibraryNotice`Pause(n1);
+    code := LibraryNotice`SendTotal(n1, 100);
+    o1 := LibraryNotice`Snapshot(n1);
+    c05 := code = <NotReady>
+      and o1 = mk_LibraryNotice`SnapshotView(<Paused>, <PENDING>, 0, {});
+    LibraryNotice`Resume(n1);
+    o1 := LibraryNotice`Snapshot(n1);
+    c05 := c05 and o1 = mk_LibraryNotice`SnapshotView(<Ready>, <PENDING>, 0, {});
+
+    code := LibraryNotice`SendTotal(n1, 100);
+    o1 := LibraryNotice`Snapshot(n1);
+    c06 := code = <Started>
+      and o1 = mk_LibraryNotice`SnapshotView(<WaitingResult>, <PENDING>, 1, {});
+    code := LibraryNotice`SendTotal(n1, 100);
+    o1 := LibraryNotice`Snapshot(n1);
+    c07 := code = <NotReady>
+      and o1 = mk_LibraryNotice`SnapshotView(<WaitingResult>, <PENDING>, 1, {});
+    LibraryNotice`RecordResult(n1, 1, false, 100);
+    o1 := LibraryNotice`Snapshot(n1);
+    c08 := o1 = mk_LibraryNotice`SnapshotView(<RetryWait>, <RETRY>, 1, {105});
+    code := LibraryNotice`SendTotal(n1, 104);
+    o1 := LibraryNotice`Snapshot(n1);
+    c09 := code = <TooEarly>
+      and o1 = mk_LibraryNotice`SnapshotView(<RetryWait>, <RETRY>, 1, {105});
+    code := LibraryNotice`SendTotal(n1, 105);
+    o1 := LibraryNotice`Snapshot(n1);
+    c10 := code = <Started>
+      and o1 = mk_LibraryNotice`SnapshotView(<WaitingResult>, <PENDING>, 2, {});
+    LibraryNotice`RecordResult(n1, 1, true, 105);
+    o1 := LibraryNotice`Snapshot(n1);
+    c11 := o1 = mk_LibraryNotice`SnapshotView(<WaitingResult>, <PENDING>, 2, {});
+    LibraryNotice`RecordResult(n1, 2, true, 105);
+    code := LibraryNotice`SendTotal(n1, 105);
+    o1 := LibraryNotice`Snapshot(n1);
+    c12 := code = <NotReady>
+      and o1 = mk_LibraryNotice`SnapshotView(<Sent>, <SENT>, 2, {});
+
+    o2 := LibraryNotice`Snapshot(n2);
+    c13 := o2 = mk_LibraryNotice`SnapshotView(<Queued>, <PENDING>, 0, {});
+    LibraryNotice`Prepare(n2, true);
+    LibraryNotice`Send(n2, 106);
+    LibraryNotice`RecordResult(n2, 1, false, 107);
+    LibraryNotice`Reschedule(n2, 116, 108);
+    code := LibraryNotice`SendTotal(n2, 112);
+    o2 := LibraryNotice`Snapshot(n2);
+    c13 := c13 and code = <TooEarly>
+      and o2 = mk_LibraryNotice`SnapshotView(<RetryWait>, <RETRY>, 1, {116});
+    code := LibraryNotice`SendTotal(n2, 116);
+    o1 := LibraryNotice`Snapshot(n1);
+    o2 := LibraryNotice`Snapshot(n2);
+    c13 := c13 and code = <Started>
+      and o2 = mk_LibraryNotice`SnapshotView(<WaitingResult>, <PENDING>, 2, {})
+      and o1 = mk_LibraryNotice`SnapshotView(<Sent>, <SENT>, 2, {});
+
+    return [c01, c02, c03, c04, c05, c06, c07, c08, c09, c10, c11, c12, c13]
+  );
+
+  DuplicateReservation : () ==> ()
+  DuplicateReservation() ==
+    (LibraryNotice`Register(r1, n1); LibraryNotice`Register(r1, n2));
+
+  DuplicateNotice : () ==> ()
+  DuplicateNotice() ==
+    (LibraryNotice`Register(r1, n1); LibraryNotice`Register(r2, n1));
+
+  InvalidPayload : () ==> ()
+  InvalidPayload() ==
+    (LibraryNotice`Register(r1, n1); LibraryNotice`Prepare(n1, false));
+
+  LateCallback : () ==> ()
+  LateCallback() ==
+    (LibraryNotice`Register(r1, n1); LibraryNotice`Prepare(n1, true); LibraryNotice`Send(n1, 100);
+     LibraryNotice`RecordResult(n1, 1, true, 100); LibraryNotice`RecordResult(n1, 1, false, 101))
+
+end Lab7Checks
