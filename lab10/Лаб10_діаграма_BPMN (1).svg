@@ -1,0 +1,480 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2290 990" width="2290" height="990" role="img" aria-label="BPMN виконання замовлення сервісу доставки їжі">
+  <defs>
+    <marker id="seqArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#273544"/>
+    </marker>
+    <marker id="msgArrow" markerWidth="13" markerHeight="11" refX="11" refY="5.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1 1 L11 5.5 L1 10 Z" fill="white" stroke="#536878" stroke-width="1.2"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="2290" height="990" fill="white"/>
+  <g id="visual_Participant_Client" data-bpmn-id="Participant_Client">
+    <rect x="20" y="20" width="2250" height="60" fill="#f7fafc" stroke="#607484" stroke-width="1.6"/>
+    <text x="1145.0" y="55.61" text-anchor="middle" font-family="DejaVu Sans" font-size="17" font-weight="bold" fill="#172735">
+      <tspan x="1145.0" dy="0">Клієнт  ·  згорнутий пул</tspan>
+    </text>
+  </g>
+  <g id="visual_Participant_Restaurant" data-bpmn-id="Participant_Restaurant">
+    <rect x="20" y="120" width="2250" height="155" fill="#f7fafc" stroke="#607484" stroke-width="1.6"/>
+    <rect x="20" y="120" width="30" height="155" fill="#e7eff5" stroke="#607484" stroke-width="1.2"/>
+    <g transform="translate(35 197.5) rotate(-90)">
+      <text x="0" y="5.28" text-anchor="middle" font-family="DejaVu Sans" font-size="16" font-weight="bold" fill="#172735">
+        <tspan x="0" dy="0">Заклад</tspan>
+      </text>
+    </g>
+  </g>
+  <g id="visual_Participant_Service" data-bpmn-id="Participant_Service">
+    <rect x="20" y="320" width="2250" height="650" fill="#f7fafc" stroke="#607484" stroke-width="1.6"/>
+    <rect x="20" y="320" width="30" height="650" fill="#e7eff5" stroke="#607484" stroke-width="1.2"/>
+    <g transform="translate(35 645.0) rotate(-90)">
+      <text x="0" y="5.28" text-anchor="middle" font-family="DejaVu Sans" font-size="16" font-weight="bold" fill="#172735">
+        <tspan x="0" dy="0">Сервіс доставки їжі</tspan>
+      </text>
+    </g>
+  </g>
+  <g id="visual_Lane_Platform" data-bpmn-id="Lane_Platform">
+    <rect x="50" y="320" width="2220" height="330" fill="white" stroke="#607484" stroke-width="1.6"/>
+    <rect x="50" y="320" width="30" height="330" fill="#e7eff5" stroke="#607484" stroke-width="1.2"/>
+    <g transform="translate(65 485.0) rotate(-90)">
+      <text x="0" y="5.28" text-anchor="middle" font-family="DejaVu Sans" font-size="16" font-weight="normal" fill="#172735">
+        <tspan x="0" dy="0">Платформа</tspan>
+      </text>
+    </g>
+  </g>
+  <g id="visual_Lane_Courier" data-bpmn-id="Lane_Courier">
+    <rect x="50" y="650" width="2220" height="320" fill="white" stroke="#607484" stroke-width="1.6"/>
+    <rect x="50" y="650" width="30" height="320" fill="#e7eff5" stroke="#607484" stroke-width="1.2"/>
+    <g transform="translate(65 810.0) rotate(-90)">
+      <text x="0" y="5.28" text-anchor="middle" font-family="DejaVu Sans" font-size="16" font-weight="normal" fill="#172735">
+        <tspan x="0" dy="0">Курʼєр</tspan>
+      </text>
+    </g>
+  </g>
+  <g id="visual_fz1" data-bpmn-id="fz1">
+    <polyline points="393,198 450,198" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_fz2" data-bpmn-id="fz2">
+    <polyline points="600,198 650,198" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_fz3" data-bpmn-id="fz3">
+    <polyline points="800,198 832,198" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f1" data-bpmn-id="f1">
+    <polyline points="128,450 180,450" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f2" data-bpmn-id="f2">
+    <polyline points="205,425 205,389 300,389" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f3" data-bpmn-id="f3">
+    <polyline points="205,475 205,535 300,535" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f4" data-bpmn-id="f4">
+    <polyline points="450,389 832,389" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f5" data-bpmn-id="f5">
+    <polyline points="375,570 375,708" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f6" data-bpmn-id="f6">
+    <polyline points="450,751 515,751" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f7" data-bpmn-id="f7">
+    <polyline points="565,751 700,751" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f8" data-bpmn-id="f8">
+    <polyline points="540,726 540,570" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+    <line x1="534" y1="715" x2="546" y2="721" stroke="#273544" stroke-width="1.8"/>
+  </g>
+  <g id="visual_f_reply" data-bpmn-id="f_reply">
+    <polyline points="450,706 450,627 510,627 510,570" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f_failed" data-bpmn-id="f_failed">
+    <polyline points="640,535 685,535" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f9" data-bpmn-id="f9">
+    <polyline points="710,510 710,470 375,470 375,500" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f10" data-bpmn-id="f10">
+    <polyline points="735,535 795,535" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+    <line x1="740" y1="541" x2="746" y2="529" stroke="#273544" stroke-width="1.8"/>
+  </g>
+  <g id="visual_f11" data-bpmn-id="f11">
+    <polyline points="945,535 987,535" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f12" data-bpmn-id="f12">
+    <polyline points="868,389 1075,389" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f13" data-bpmn-id="f13">
+    <polyline points="850,751 1100,751 1100,414" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f14" data-bpmn-id="f14">
+    <polyline points="1125,389 1195,389 1195,716" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f15" data-bpmn-id="f15">
+    <polyline points="1270,751 1335,751 1335,424" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f16" data-bpmn-id="f16">
+    <polyline points="1410,389 1545,389 1545,716" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f17" data-bpmn-id="f17">
+    <polyline points="1620,751 1675,751" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f18" data-bpmn-id="f18">
+    <polyline points="1500,698 1500,580" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f19" data-bpmn-id="f19">
+    <polyline points="1460,510 1460,482" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f20" data-bpmn-id="f20">
+    <polyline points="1725,751 1800,751" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f21" data-bpmn-id="f21">
+    <polyline points="1700,776 1700,885 1800,885" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+    <line x1="1694" y1="781" x2="1706" y2="787" stroke="#273544" stroke-width="1.8"/>
+  </g>
+  <g id="visual_f22" data-bpmn-id="f22">
+    <polyline points="1950,751 1990,751" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f23" data-bpmn-id="f23">
+    <polyline points="1950,885 2015,885 2015,776" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f24" data-bpmn-id="f24">
+    <polyline points="2015,726 2015,424" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_f25" data-bpmn-id="f25">
+    <polyline points="2090,389 2167,389" fill="none" stroke-width="1.8" stroke="#273544" marker-end="url(#seqArrow)"/>
+  </g>
+  <g id="visual_m1" data-bpmn-id="m1">
+    <polyline points="110,80 110,432" fill="none" stroke-width="1.8" stroke="#536878" marker-end="url(#msgArrow)" stroke-dasharray="7 5"/>
+    <circle cx="110" cy="80" r="4" fill="white" stroke="#536878" stroke-width="1.2"/>
+  </g>
+  <g id="visual_m2" data-bpmn-id="m2">
+    <polyline points="375,354 375,216" fill="none" stroke-width="1.8" stroke="#536878" marker-end="url(#msgArrow)" stroke-dasharray="7 5"/>
+    <circle cx="375" cy="354" r="4" fill="white" stroke="#536878" stroke-width="1.2"/>
+  </g>
+  <g id="visual_m3" data-bpmn-id="m3">
+    <polyline points="850,216 850,371" fill="none" stroke-width="1.8" stroke="#536878" marker-end="url(#msgArrow)" stroke-dasharray="7 5"/>
+    <circle cx="850" cy="216" r="4" fill="white" stroke="#536878" stroke-width="1.2"/>
+  </g>
+  <g id="visual_m4" data-bpmn-id="m4">
+    <polyline points="1335,354 1335,80" fill="none" stroke-width="1.8" stroke="#536878" marker-end="url(#msgArrow)" stroke-dasharray="7 5"/>
+    <circle cx="1335" cy="354" r="4" fill="white" stroke="#536878" stroke-width="1.2"/>
+  </g>
+  <g id="visual_m5" data-bpmn-id="m5">
+    <polyline points="2185,371 2185,80" fill="none" stroke-width="1.8" stroke="#536878" marker-end="url(#msgArrow)" stroke-dasharray="7 5"/>
+    <circle cx="2185" cy="371" r="4" fill="white" stroke="#536878" stroke-width="1.2"/>
+  </g>
+  <g id="visual_id_SEZ" data-bpmn-id="id_SEZ">
+    <circle cx="375.0" cy="198.0" r="18.0" fill="white" stroke="#1f684e" stroke-width="1.8"/>
+    <rect x="367.0" y="193.0" width="16" height="10" rx="1" fill="white" stroke="#273544" stroke-width="1"/>
+    <path d="M367.0,193.0 L375.0,199.0 L383.0,193.0" fill="none" stroke="#273544" stroke-width="1"/>
+    <text x="375.0" y="150.35999999999999" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="normal" fill="#172735">
+      <tspan x="375.0" dy="0">Нове</tspan>
+      <tspan x="375.0" dy="15.680000000000001">замовлення</tspan>
+    </text>
+  </g>
+  <g id="visual_id_TZ1" data-bpmn-id="id_TZ1">
+    <rect x="450" y="163" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <text x="525.0" y="197.665" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="525.0" dy="0">Приготувати</tspan>
+      <tspan x="525.0" dy="16.240000000000002">страви</tspan>
+    </text>
+  </g>
+  <g id="visual_id_TZ2" data-bpmn-id="id_TZ2">
+    <rect x="650" y="163" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <text x="725.0" y="197.665" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="725.0" dy="0">Запакувати</tspan>
+      <tspan x="725.0" dy="16.240000000000002">замовлення</tspan>
+    </text>
+  </g>
+  <g id="visual_id_EEZ" data-bpmn-id="id_EEZ">
+    <circle cx="850.0" cy="198.0" r="18.0" fill="white" stroke="#942f34" stroke-width="3.3"/>
+    <rect x="842.0" y="193.0" width="16" height="10" rx="1" fill="#273544" stroke="#273544" stroke-width="1"/>
+    <path d="M842.0,193.0 L850.0,199.0 L858.0,193.0" fill="none" stroke="white" stroke-width="1"/>
+    <text x="850.0" y="150.35999999999999" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="normal" fill="#172735">
+      <tspan x="850.0" dy="0">Замовлення</tspan>
+      <tspan x="850.0" dy="15.680000000000001">готове</tspan>
+    </text>
+  </g>
+  <g id="visual_id_SE" data-bpmn-id="id_SE">
+    <circle cx="110.0" cy="450.0" r="18.0" fill="white" stroke="#1f684e" stroke-width="1.8"/>
+    <rect x="102.0" y="445.0" width="16" height="10" rx="1" fill="white" stroke="#273544" stroke-width="1"/>
+    <path d="M102.0,445.0 L110.0,451.0 L118.0,445.0" fill="none" stroke="#273544" stroke-width="1"/>
+    <text x="140.0" y="489.86" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="normal" fill="#172735">
+      <tspan x="140.0" dy="0">Замовлення</tspan>
+      <tspan x="140.0" dy="15.680000000000001">оплачено</tspan>
+    </text>
+  </g>
+  <g id="visual_id_PG1" data-bpmn-id="id_PG1">
+    <polygon points="205.0,425.0 230.0,450.0 205.0,475.0 180.0,450.0" fill="#fff8e7" stroke="#273544" stroke-width="1.7"/>
+    <text x="205.0" y="459.89" text-anchor="middle" font-family="DejaVu Sans" font-size="33" font-weight="bold" fill="#172735">
+      <tspan x="205.0" dy="0">+</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T1" data-bpmn-id="id_T1">
+    <rect x="300" y="354" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <rect x="308" y="364" width="16" height="10" rx="1" fill="#273544" stroke="#273544" stroke-width="1"/>
+    <path d="M308,364 L316,370 L324,364" fill="none" stroke="white" stroke-width="1"/>
+    <text x="375.0" y="380.545" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="375.0" dy="0">Передати</tspan>
+      <tspan x="375.0" dy="16.240000000000002">замовлення</tspan>
+      <tspan x="375.0" dy="16.240000000000002">закладу</tspan>
+    </text>
+  </g>
+  <g id="visual_id_IE" data-bpmn-id="id_IE">
+    <circle cx="850.0" cy="389.0" r="18.0" fill="white" stroke="#273544" stroke-width="1.8"/>
+    <circle cx="850.0" cy="389.0" r="14.0" fill="none" stroke="#273544" stroke-width="1.2"/>
+    <rect x="842.0" y="384.0" width="16" height="10" rx="1" fill="white" stroke="#273544" stroke-width="1"/>
+    <path d="M842.0,384.0 L850.0,390.0 L858.0,384.0" fill="none" stroke="#273544" stroke-width="1"/>
+    <text x="850.0" y="427.36" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="normal" fill="#172735">
+      <tspan x="850.0" dy="0">Замовлення</tspan>
+      <tspan x="850.0" dy="15.680000000000001">готове</tspan>
+    </text>
+  </g>
+  <g id="visual_id_PG2" data-bpmn-id="id_PG2">
+    <polygon points="1100.0,364.0 1125.0,389.0 1100.0,414.0 1075.0,389.0" fill="#fff8e7" stroke="#273544" stroke-width="1.7"/>
+    <text x="1100.0" y="398.89" text-anchor="middle" font-family="DejaVu Sans" font-size="33" font-weight="bold" fill="#172735">
+      <tspan x="1100.0" dy="0">+</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T2" data-bpmn-id="id_T2">
+    <rect x="300" y="500" width="150" height="70" rx="11" fill="#eaf4f9" stroke="#273544" stroke-width="1.8"/>
+    <text x="315" y="518.95" text-anchor="middle" font-family="DejaVu Sans" font-size="15" font-weight="normal" fill="#172735">
+      <tspan x="315" dy="0">⚙</tspan>
+    </text>
+    <text x="375.0" y="526.545" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="375.0" dy="0">Запропонувати</tspan>
+      <tspan x="375.0" dy="16.240000000000002">замовлення</tspan>
+      <tspan x="375.0" dy="16.240000000000002">курʼєру</tspan>
+    </text>
+  </g>
+  <g id="visual_id_TF" data-bpmn-id="id_TF">
+    <rect x="480" y="500" width="160" height="70" rx="11" fill="#eaf4f9" stroke="#273544" stroke-width="1.8"/>
+    <text x="495" y="518.95" text-anchor="middle" font-family="DejaVu Sans" font-size="15" font-weight="normal" fill="#172735">
+      <tspan x="495" dy="0">⚙</tspan>
+    </text>
+    <text x="560.0" y="534.665" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="560.0" dy="0">Зафіксувати</tspan>
+      <tspan x="560.0" dy="16.240000000000002">невдалу спробу</tspan>
+    </text>
+  </g>
+  <g id="visual_id_XOR2" data-bpmn-id="id_XOR2">
+    <polygon points="710.0,510.0 735.0,535.0 710.0,560.0 685.0,535.0" fill="#fff8e7" stroke="#273544" stroke-width="1.7"/>
+    <text x="710.0" y="544.89" text-anchor="middle" font-family="DejaVu Sans" font-size="33" font-weight="bold" fill="#172735">
+      <tspan x="710.0" dy="0">×</tspan>
+    </text>
+    <text x="710.0" y="585.6999999999999" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="bold" fill="#172735">
+      <tspan x="710.0" dy="0">Спроби вичерпано?</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T5" data-bpmn-id="id_T5">
+    <rect x="795" y="500" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <circle cx="810" cy="512" r="3.5" fill="none" stroke="#273544"/>
+    <path d="M804 523 Q810 514 816 523" fill="none" stroke="#273544"/>
+    <text x="870.0" y="526.545" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="870.0" dy="0">Передати</tspan>
+      <tspan x="870.0" dy="16.240000000000002">замовлення</tspan>
+      <tspan x="870.0" dy="16.240000000000002">оператору</tspan>
+    </text>
+  </g>
+  <g id="visual_id_EE2" data-bpmn-id="id_EE2">
+    <circle cx="1005.0" cy="535.0" r="18.0" fill="white" stroke="#942f34" stroke-width="3.3"/>
+    <circle cx="1005.0" cy="535.0" r="10" fill="#942f34"/>
+    <text x="1005.0" y="576.86" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="normal" fill="#172735">
+      <tspan x="1005.0" dy="0">Передано</tspan>
+      <tspan x="1005.0" dy="15.680000000000001">оператору</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T3" data-bpmn-id="id_T3">
+    <rect x="300" y="708" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <circle cx="315" cy="720" r="3.5" fill="none" stroke="#273544"/>
+    <path d="M309 731 Q315 722 321 731" fill="none" stroke="#273544"/>
+    <text x="375.0" y="742.665" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="375.0" dy="0">Розглянути</tspan>
+      <tspan x="375.0" dy="16.240000000000002">пропозицію</tspan>
+    </text>
+  </g>
+  <g id="visual_id_TR" data-bpmn-id="id_TR">
+    <circle cx="450.0" cy="724.0" r="18.0" fill="white" stroke="#273544" stroke-width="1.8"/>
+    <circle cx="450.0" cy="724.0" r="14.0" fill="none" stroke="#273544" stroke-width="1.2"/>
+    <circle cx="450.0" cy="724.0" r="8" fill="none" stroke="#273544"/>
+    <path d="M450.0 719.0 V724.0 L454.0 726.0" fill="none" stroke="#273544" stroke-width="1.2"/>
+    <text x="491.0" y="694.1999999999999" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="normal" fill="#172735">
+      <tspan x="491.0" dy="0">2 хв</tspan>
+    </text>
+  </g>
+  <g id="visual_id_XOR1" data-bpmn-id="id_XOR1">
+    <polygon points="540.0,726.0 565.0,751.0 540.0,776.0 515.0,751.0" fill="#fff8e7" stroke="#273544" stroke-width="1.7"/>
+    <text x="540.0" y="760.89" text-anchor="middle" font-family="DejaVu Sans" font-size="33" font-weight="bold" fill="#172735">
+      <tspan x="540.0" dy="0">×</tspan>
+    </text>
+    <text x="540.0" y="799.1999999999999" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="bold" fill="#172735">
+      <tspan x="540.0" dy="0">Прийнято?</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T4" data-bpmn-id="id_T4">
+    <rect x="700" y="716" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <text x="775.0" y="750.665" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="775.0" dy="0">Рухатися до</tspan>
+      <tspan x="775.0" dy="16.240000000000002">закладу</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T6" data-bpmn-id="id_T6">
+    <rect x="1120" y="716" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <text x="1195.0" y="750.665" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="1195.0" dy="0">Забрати</tspan>
+      <tspan x="1195.0" dy="16.240000000000002">замовлення</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T7" data-bpmn-id="id_T7">
+    <rect x="1260" y="354" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <rect x="1268" y="364" width="16" height="10" rx="1" fill="#273544" stroke="#273544" stroke-width="1"/>
+    <path d="M1268,364 L1276,370 L1284,364" fill="none" stroke="white" stroke-width="1"/>
+    <text x="1335.0" y="388.665" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="1335.0" dy="0">Повідомити:</tspan>
+      <tspan x="1335.0" dy="16.240000000000002">курʼєр у дорозі</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T8" data-bpmn-id="id_T8">
+    <rect x="1470" y="716" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <text x="1545.0" y="750.665" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="1545.0" dy="0">Доставити</tspan>
+      <tspan x="1545.0" dy="16.240000000000002">замовлення</tspan>
+    </text>
+  </g>
+  <g id="visual_id_TM" data-bpmn-id="id_TM">
+    <circle cx="1500.0" cy="716.0" r="18.0" fill="white" stroke="#273544" stroke-width="1.8" stroke-dasharray="5 3"/>
+    <circle cx="1500.0" cy="716.0" r="14.0" fill="none" stroke="#273544" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <circle cx="1500.0" cy="716.0" r="8" fill="none" stroke="#273544"/>
+    <path d="M1500.0 711.0 V716.0 L1504.0 718.0" fill="none" stroke="#273544" stroke-width="1.2"/>
+    <text x="1431.5" y="689.1999999999999" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="normal" fill="#172735">
+      <tspan x="1431.5" dy="0">45 хв</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T12" data-bpmn-id="id_T12">
+    <rect x="1395" y="510" width="130" height="70" rx="11" fill="#eaf4f9" stroke="#273544" stroke-width="1.8"/>
+    <text x="1410" y="528.95" text-anchor="middle" font-family="DejaVu Sans" font-size="15" font-weight="normal" fill="#172735">
+      <tspan x="1410" dy="0">⚙</tspan>
+    </text>
+    <text x="1460.0" y="536.545" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="1460.0" dy="0">Нарахувати</tspan>
+      <tspan x="1460.0" dy="16.240000000000002">бонус за</tspan>
+      <tspan x="1460.0" dy="16.240000000000002">затримку</tspan>
+    </text>
+  </g>
+  <g id="visual_id_EE3" data-bpmn-id="id_EE3">
+    <circle cx="1460.0" cy="464.0" r="18.0" fill="white" stroke="#942f34" stroke-width="3.3"/>
+    <text x="1388.5" y="458.86" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="normal" fill="#172735">
+      <tspan x="1388.5" dy="0">Бонус</tspan>
+      <tspan x="1388.5" dy="15.680000000000001">нараховано</tspan>
+    </text>
+  </g>
+  <g id="visual_id_XOR3" data-bpmn-id="id_XOR3">
+    <polygon points="1700.0,726.0 1725.0,751.0 1700.0,776.0 1675.0,751.0" fill="#fff8e7" stroke="#273544" stroke-width="1.7"/>
+    <text x="1700.0" y="760.89" text-anchor="middle" font-family="DejaVu Sans" font-size="33" font-weight="bold" fill="#172735">
+      <tspan x="1700.0" dy="0">×</tspan>
+    </text>
+    <text x="1700.0" y="714.6999999999999" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="bold" fill="#172735">
+      <tspan x="1700.0" dy="0">Клієнт на місці?</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T9" data-bpmn-id="id_T9">
+    <rect x="1800" y="716" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <text x="1875.0" y="742.545" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="1875.0" dy="0">Передати</tspan>
+      <tspan x="1875.0" dy="16.240000000000002">замовлення</tspan>
+      <tspan x="1875.0" dy="16.240000000000002">клієнту</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T11" data-bpmn-id="id_T11">
+    <rect x="1800" y="850" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <text x="1875.0" y="876.545" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="1875.0" dy="0">Повернути</tspan>
+      <tspan x="1875.0" dy="16.240000000000002">замовлення в</tspan>
+      <tspan x="1875.0" dy="16.240000000000002">заклад</tspan>
+    </text>
+  </g>
+  <g id="visual_id_XOR4" data-bpmn-id="id_XOR4">
+    <polygon points="2015.0,726.0 2040.0,751.0 2015.0,776.0 1990.0,751.0" fill="#fff8e7" stroke="#273544" stroke-width="1.7"/>
+    <text x="2015.0" y="760.89" text-anchor="middle" font-family="DejaVu Sans" font-size="33" font-weight="bold" fill="#172735">
+      <tspan x="2015.0" dy="0">×</tspan>
+    </text>
+  </g>
+  <g id="visual_id_T10" data-bpmn-id="id_T10">
+    <rect x="1940" y="354" width="150" height="70" rx="11" fill="#f5faff" stroke="#273544" stroke-width="1.8"/>
+    <text x="2015.0" y="380.545" text-anchor="middle" font-family="DejaVu Sans" font-size="14.5" font-weight="normal" fill="#172735">
+      <tspan x="2015.0" dy="0">Зберегти</tspan>
+      <tspan x="2015.0" dy="16.240000000000002">підсумковий</tspan>
+      <tspan x="2015.0" dy="16.240000000000002">статус</tspan>
+    </text>
+  </g>
+  <g id="visual_id_EE" data-bpmn-id="id_EE">
+    <circle cx="2185.0" cy="389.0" r="18.0" fill="white" stroke="#942f34" stroke-width="3.3"/>
+    <rect x="2177.0" y="384.0" width="16" height="10" rx="1" fill="#273544" stroke="#273544" stroke-width="1"/>
+    <path d="M2177.0,384.0 L2185.0,390.0 L2193.0,384.0" fill="none" stroke="white" stroke-width="1"/>
+    <text x="2185.0" y="429.36" text-anchor="middle" font-family="DejaVu Sans" font-size="14" font-weight="normal" fill="#172735">
+      <tspan x="2185.0" dy="0">Статус</tspan>
+      <tspan x="2185.0" dy="15.680000000000001">повідомлено</tspan>
+    </text>
+  </g>
+  <g data-label-of="f7">
+    <text x="631.5" y="737.9" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="bold" fill="#172735">
+      <tspan x="631.5" dy="0">так</tspan>
+    </text>
+  </g>
+  <g data-label-of="f8">
+    <text x="560.0" y="697.9" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="bold" fill="#172735">
+      <tspan x="560.0" dy="0">ні</tspan>
+    </text>
+  </g>
+  <g data-label-of="f9">
+    <text x="562.0" y="458.90000000000003" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="bold" fill="#172735">
+      <tspan x="562.0" dy="0">ні</tspan>
+    </text>
+  </g>
+  <g data-label-of="f10">
+    <text x="767.5" y="521.9" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="bold" fill="#172735">
+      <tspan x="767.5" dy="0">так</tspan>
+    </text>
+  </g>
+  <g data-label-of="f20">
+    <text x="1767.5" y="737.9" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="bold" fill="#172735">
+      <tspan x="1767.5" dy="0">так</tspan>
+    </text>
+  </g>
+  <g data-label-of="f21">
+    <text x="1680.5" y="842.9" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="bold" fill="#172735">
+      <tspan x="1680.5" dy="0">ні</tspan>
+    </text>
+  </g>
+  <g data-label-of="m1">
+    <rect x="118" y="288" width="190" height="20" rx="4" fill="#f2f6f9"/>
+    <text x="213.0" y="301.90000000000003" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="normal" fill="#172735">
+      <tspan x="213.0" dy="0">Оплачене замовлення</tspan>
+    </text>
+  </g>
+  <g data-label-of="m2">
+    <rect x="383" y="288" width="114" height="20" rx="4" fill="#f2f6f9"/>
+    <text x="440.0" y="301.90000000000003" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="normal" fill="#172735">
+      <tspan x="440.0" dy="0">Замовлення</tspan>
+    </text>
+  </g>
+  <g data-label-of="m3">
+    <rect x="858" y="288" width="102" height="20" rx="4" fill="#f2f6f9"/>
+    <text x="909.0" y="301.90000000000003" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="normal" fill="#172735">
+      <tspan x="909.0" dy="0">Готовність</tspan>
+    </text>
+  </g>
+  <g data-label-of="m4">
+    <rect x="1342" y="88" width="139" height="20" rx="4" fill="#f2f6f9"/>
+    <text x="1411.5" y="101.9" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="normal" fill="#172735">
+      <tspan x="1411.5" dy="0">Курʼєр у дорозі</tspan>
+    </text>
+  </g>
+  <g data-label-of="m5">
+    <rect x="1884" y="88" width="293" height="20" rx="4" fill="#f2f6f9"/>
+    <text x="2030.5" y="101.9" text-anchor="middle" font-family="DejaVu Sans" font-size="13" font-weight="normal" fill="#172735">
+      <tspan x="2030.5" dy="0">Підсумок: доставлено / повернено</tspan>
+    </text>
+  </g>
+</svg>
